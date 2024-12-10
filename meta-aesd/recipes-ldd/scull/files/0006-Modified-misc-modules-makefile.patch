@@ -1,0 +1,23 @@
+From 32275d4b4dd60e405231f69d50884dbff0717a16 Mon Sep 17 00:00:00 2001
+From: Ime <imeasamudo@gmail.com>
+Date: Mon, 9 Dec 2024 20:23:28 -0700
+Subject: [PATCH] Modified misc-modules makefile
+
+---
+ misc-modules/Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/misc-modules/Makefile b/misc-modules/Makefile
+index f4e6e34..3b0feb8 100644
+--- a/misc-modules/Makefile
++++ b/misc-modules/Makefile
+@@ -29,8 +29,7 @@ clean:
+ 
+ else
+     # called from kernel build system: just declare what our modules are
+-    obj-m := hello.o hellop.o seq.o jiq.o sleepy.o complete.o \
+-             silly.o faulty.o kdatasize.o kdataalign.o jit.o
++    obj-m := hello.o faulty.o 
+ endif
+ 
+ 

@@ -1,0 +1,44 @@
+From 40536a80a307078b0fe83f4669300319a6303bf0 Mon Sep 17 00:00:00 2001
+From: Ime <imeasamudo@gmail.com>
+Date: Sun, 8 Dec 2024 21:16:29 -0700
+Subject: [PATCH] Made changes to makefile and hello.c
+
+---
+ Makefile             | 5 +----
+ misc-modules/hello.c | 4 ++--
+ 2 files changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7b08c49..20b21ba 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,8 +1,5 @@
+ 
+-SUBDIRS =  misc-progs misc-modules \
+-           skull scull scullc scullp lddbus sculld scullv shortprint simple tty \
+-	   pci usb\
+-	   sbull snull short
++SUBDIRS =  misc-modules scull 
+ 
+ all: subdirs
+ 
+diff --git a/misc-modules/hello.c b/misc-modules/hello.c
+index 85cd6d0..ef51ded 100644
+--- a/misc-modules/hello.c
++++ b/misc-modules/hello.c
+@@ -7,13 +7,13 @@ MODULE_LICENSE("Dual BSD/GPL");
+ 
+ static int hello_init(void)
+ {
+-	printk(KERN_ALERT "Hello, world\n");
++	printk(KERN_ALERT "Hello, world Causaility-Labs\n");
+ 	return 0;
+ }
+ 
+ static void hello_exit(void)
+ {
+-	printk(KERN_ALERT "Goodbye, cruel world\n");
++	printk(KERN_ALERT "Goodbye, cruel world Causality-Labs\n");
+ }
+ 
+ module_init(hello_init);

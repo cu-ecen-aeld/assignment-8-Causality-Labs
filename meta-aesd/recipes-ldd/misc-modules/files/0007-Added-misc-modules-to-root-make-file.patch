@@ -1,0 +1,20 @@
+From 3cec1b562a49cb4a8346577a5411202c2d16bdd5 Mon Sep 17 00:00:00 2001
+From: Ime <imeasamudo@gmail.com>
+Date: Mon, 9 Dec 2024 22:01:24 -0700
+Subject: [PATCH] Added misc-modules to root make file
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index d3ea138..9db8154 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,5 @@
+ 
+-SUBDIRS = scull 
++SUBDIRS = scull misc-modules
+ 
+ all: subdirs
+ 

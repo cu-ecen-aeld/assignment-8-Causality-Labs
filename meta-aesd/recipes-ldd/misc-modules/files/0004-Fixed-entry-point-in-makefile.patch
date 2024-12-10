@@ -1,0 +1,36 @@
+From ed5a2420486bdc783206c3a443ff9cad098486c6 Mon Sep 17 00:00:00 2001
+From: Ime <imeasamudo@gmail.com>
+Date: Mon, 9 Dec 2024 00:20:50 -0700
+Subject: [PATCH] Fixed entry point in makefile
+
+---
+ misc-modules/Makefile | 2 +-
+ scull/Makefile        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/misc-modules/Makefile b/misc-modules/Makefile
+index 0551600..f4e6e34 100644
+--- a/misc-modules/Makefile
++++ b/misc-modules/Makefile
+@@ -5,7 +5,7 @@
+ # This conditional selects whether we are being included from the
+ # kernel Makefile or not.
+ 
+-LDDINC=$(PWD)/include
++LDDINC=$(PWD)/../include
+ EXTRA_CFLAGS += -I$(LDDINC)
+ 
+ ifeq ($(KERNELRELEASE),)
+diff --git a/scull/Makefile b/scull/Makefile
+index 39406b4..3f6c8d0 100644
+--- a/scull/Makefile
++++ b/scull/Makefile
+@@ -9,7 +9,7 @@ else
+   DEBFLAGS = -O2
+ endif
+ 
+-LDDINC=$(PWD)/include
++LDDINC=$(PWD)/../include
+ 
+ EXTRA_CFLAGS += $(DEBFLAGS)
+ EXTRA_CFLAGS += -I$(LDDINC)

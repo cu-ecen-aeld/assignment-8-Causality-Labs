@@ -1,0 +1,161 @@
+From 843e3e23b255d38bf9e47e9dde481ee33f5418db Mon Sep 17 00:00:00 2001
+From: Ime <imeasamudo@gmail.com>
+Date: Mon, 9 Dec 2024 11:23:31 -0700
+Subject: [PATCH] Added EXPORT_SYMBOL to non static functions
+
+---
+ scull/access.c |  3 ++-
+ scull/main.c   | 20 ++++++++++++--------
+ scull/pipe.c   |  4 ++--
+ 3 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/scull/access.c b/scull/access.c
+index a4af1cd..6684885 100644
+--- a/scull/access.c
++++ b/scull/access.c
+@@ -383,7 +383,7 @@ int scull_access_init(dev_t firstdev)
+ 		scull_access_setup (firstdev + i, scull_access_devs + i);
+ 	return SCULL_N_ADEVS;
+ }
+-
++EXPORT_SYMBOL(scull_access_init);
+ /*
+  * This is called by cleanup_module or on failure.
+  * It is required to never fail, even if nothing was initialized first
+@@ -411,3 +411,4 @@ void scull_access_cleanup(void)
+ 	unregister_chrdev_region(scull_a_firstdev, SCULL_N_ADEVS);
+ 	return;
+ }
++EXPORT_SYMBOL(scull_access_cleanup);
+diff --git a/scull/main.c b/scull/main.c
+index f737970..0457ea9 100644
+--- a/scull/main.c
++++ b/scull/main.c
+@@ -28,6 +28,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/cdev.h>
+ 
++
+ #include <linux/uaccess.h>	/* copy_*_user */
+ 
+ #include "scull.h"		/* local definitions */
+@@ -82,6 +83,7 @@ int scull_trim(struct scull_dev *dev)
+ 	dev->data = NULL;
+ 	return 0;
+ }
++EXPORT_SYMBOL(scull_trim);
+ #ifdef SCULL_DEBUG /* use proc only if debugging */
+ /*
+  * The proc filesystem: function to read and entry
+@@ -113,7 +115,7 @@ int scull_read_procmem(struct seq_file *s, void *v)
+         }
+         return 0;
+ }
+-
++//EXPORT_SYMBOL(scull_read_procmen);
+ 
+ 
+ /*
+@@ -254,11 +256,13 @@ int scull_open(struct inode *inode, struct file *filp)
+ 	}
+ 	return 0;          /* success */
+ }
++EXPORT_SYMBOL(scull_open);
+ 
+ int scull_release(struct inode *inode, struct file *filp)
+ {
+ 	return 0;
+ }
++EXPORT_SYMBOL(scull_release);
+ /*
+  * Follow the list
+  */
+@@ -287,7 +291,7 @@ struct scull_qset *scull_follow(struct scull_dev *dev, int n)
+ 	}
+ 	return qs;
+ }
+-
++EXPORT_SYMBOL(scull_follow);
+ /*
+  * Data management: read and write
+  */
+@@ -335,7 +339,7 @@ ssize_t scull_read(struct file *filp, char __user *buf, size_t count,
+ 	mutex_unlock(&dev->lock);
+ 	return retval;
+ }
+-
++EXPORT_SYMBOL(scull_read);
+ ssize_t scull_write(struct file *filp, const char __user *buf, size_t count,
+                 loff_t *f_pos)
+ {
+@@ -388,7 +392,7 @@ ssize_t scull_write(struct file *filp, const char __user *buf, size_t count,
+ 	mutex_unlock(&dev->lock);
+ 	return retval;
+ }
+-
++EXPORT_SYMBOL(scull_write);
+ /*
+  * The ioctl() implementation
+  */
+@@ -515,7 +519,7 @@ long scull_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 	return retval;
+ 
+ }
+-
++EXPORT_SYMBOL(scull_ioctl);
+ 
+ 
+ /*
+@@ -547,7 +551,7 @@ loff_t scull_llseek(struct file *filp, loff_t off, int whence)
+ 	filp->f_pos = newpos;
+ 	return newpos;
+ }
+-
++EXPORT_SYMBOL(scull_llseek);
+ 
+ 
+ struct file_operations scull_fops = {
+@@ -595,7 +599,7 @@ void scull_cleanup_module(void)
+ 	scull_access_cleanup();
+ 
+ }
+-
++EXPORT_SYMBOL(scull_cleanup_module);
+ 
+ /*
+  * Set up the char_dev structure for this device.
+@@ -669,6 +673,6 @@ int scull_init_module(void)
+ 	scull_cleanup_module();
+ 	return result;
+ }
+-
++EXPORT_SYMBOL(scull_init_module);
+ module_init(scull_init_module);
+ module_exit(scull_cleanup_module);
+diff --git a/scull/pipe.c b/scull/pipe.c
+index 04fb43d..f988fc5 100644
+--- a/scull/pipe.c
++++ b/scull/pipe.c
+@@ -336,7 +336,6 @@ static void scull_p_setup_cdev(struct scull_pipe *dev, int index)
+ 	if (err)
+ 		printk(KERN_NOTICE "Error %d adding scullpipe%d", err, index);
+ }
+-
+  
+ 
+ /*
+@@ -369,7 +368,7 @@ int scull_p_init(dev_t firstdev)
+ #endif
+ 	return scull_p_nr_devs;
+ }
+-
++EXPORT_SYMBOL(scull_p_init);
+ /*
+  * This is called by cleanup_module or on failure.
+  * It is required to never fail, even if nothing was initialized first
+@@ -393,3 +392,4 @@ void scull_p_cleanup(void)
+ 	unregister_chrdev_region(scull_p_devno, scull_p_nr_devs);
+ 	scull_p_devices = NULL; /* pedantic */
+ }
++EXPORT_SYMBOL(scull_p_cleanup);
+\ No newline at end of file
