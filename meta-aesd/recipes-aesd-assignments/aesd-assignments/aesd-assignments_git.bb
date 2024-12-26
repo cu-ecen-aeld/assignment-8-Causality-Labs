@@ -8,7 +8,7 @@ SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-Ime-A;proto
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-SRCREV = "7ac1e6e304629839253e990cede9c7fd3795b115" 
+SRCREV = "d6de30d9f6a164b3534e7d97971fde055cd3f7c0" 
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -19,6 +19,7 @@ S = "${WORKDIR}/git/server"
 inherit update-rc.d
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME:${PN} = "aesdsocket-start-stop"
+INITSCRIPT_PARAMS:${PN} = "defaults 99"
 
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
