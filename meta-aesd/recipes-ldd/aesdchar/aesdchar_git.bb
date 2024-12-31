@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/cu-ecen-aeld/assignments-3-and-later-Ime-A;protocol=
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "907ba61bd5958a324404a1c183e96939b475b9ce"
+SRCREV = "69b4f79814067168953d842c1f0e197b8ab713ca"
 S = "${WORKDIR}/git/aesd-char-driver"
 
 inherit module
